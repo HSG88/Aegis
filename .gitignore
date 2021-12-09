@@ -1,0 +1,19 @@
+# Node/Editors
+node_modules
+package-lock.json
+yarn.lock
+.vscode
+
+# Private config files
+networks.config.js
+
+# Hardhat files
+cache
+circuit_artifacts
+artifacts
+docs
+build/*
+!/build/README.md
+
+# Temporary Files
+ephemeral

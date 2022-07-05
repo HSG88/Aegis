@@ -35,11 +35,6 @@ function getCommitment(value, publicKey) {
   return poseidon([value, publicKey]);
 }
 
-function sha256(inputs) {
-  const preimage = Buffer.concat(inputs.map((e) => bigInt2Buffer(e)));
-  return BigInt(`0x${crypto.createHash('sha256').update(preimage).digest('hex')}`);
-}
-
 function keccak256(preimage) {
   return (
     buffer2BigInt(Buffer.from(ethers.utils.keccak256(preimage).slice(2), 'hex'))
@@ -53,6 +48,5 @@ module.exports = {
   getKeyPair,
   getCommitment,
   getNullifier,
-  sha256,
   keccak256,
 };

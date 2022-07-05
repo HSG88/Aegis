@@ -34,8 +34,7 @@ contract Verifier {
     }
 
     function verifyJoinSplitProof(
-        JoinSplitTransaction calldata _tx,
-        bool optimized
+        JoinSplitTransaction calldata _tx
     ) public view returns (bool) {
         uint256[] memory inputs = new uint256[](6);
         inputs[0] = _tx.message;
@@ -44,32 +43,17 @@ contract Verifier {
         inputs[3] = _tx.nullifiers[1];
         inputs[4] = _tx.commitments[0];
         inputs[5] = _tx.commitments[1];
-        if (optimized) {
-            uint256 inputsHash = uint256(sha256(abi.encodePacked(inputs))) %
-                SNARK_SCALAR_FIELD;
-            uint256[] memory _inputs = new uint256[](1);
-            _inputs[0] = inputsHash;
-            return Snark.verify(vKeys[2], _tx.proof, _inputs);
-        }
         return Snark.verify(vKeys[0], _tx.proof, inputs);
     }
 
     function verifyOwnershipProof(
-        OwnershipTransaction calldata _tx,
-        bool optimized
+        OwnershipTransaction calldata _tx
     ) public view returns (bool) {
         uint256[] memory inputs = new uint256[](4);
         inputs[0] = _tx.message;
         inputs[1] = _tx.merkleRoot;
         inputs[2] = _tx.nullifier;
         inputs[3] = _tx.commitment;
-        if (optimized) {
-            uint256 inputsHash = uint256(sha256(abi.encodePacked(inputs))) %
-                SNARK_SCALAR_FIELD;
-            uint256[] memory _inputs = new uint256[](1);
-            _inputs[0] = inputsHash;
-            return Snark.verify(vKeys[3], _tx.proof, _inputs);
-        }
         return Snark.verify(vKeys[1], _tx.proof, inputs);
     }
 }

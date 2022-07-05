@@ -12,21 +12,19 @@ include "./PublicKey.circom";
 
 template Base(nInputs, mOutputs, MerkleTreeDepth) {
 
-    //shared
+    // Statement
     signal input message; //public
+    signal input merkleRoot;
+    signal input nullifiers[nInputs];
+    signal input commitmentsOut[mOutputs];
 
-    //join
-    signal input valuesIn[nInputs];
+    // Witness
     signal input privateKeys[nInputs];
-    signal input merkleRoot; //public   
+    signal input valuesIn[nInputs];
     signal input pathElements[nInputs][MerkleTreeDepth];
     signal input pathIndices[nInputs];
-    signal input nullifiers[nInputs]; //public
-
-    //split
     signal input recipientPK[mOutputs]; 
     signal input valuesOut[mOutputs];
-    signal input commitmentsOut[mOutputs]; //public 
 
     var inputsTotal = 0;
     var outputsTotal = 0;

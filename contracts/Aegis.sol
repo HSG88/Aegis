@@ -47,8 +47,7 @@ contract Aegis is Commitments, Verifier {
     function withdrawFunds(
         uint256 _amount,
         address _recipient,
-        JoinSplitTransaction calldata _tx,
-        bool optimized
+        JoinSplitTransaction calldata _tx
     ) external {
         uint256 commitment = PoseidonT3.poseidon(
             [_amount, uint256(uint160(_recipient))]
@@ -74,7 +73,7 @@ contract Aegis is Commitments, Verifier {
         );
 
         require(
-            Verifier.verifyJoinSplitProof(_tx, optimized),
+            Verifier.verifyJoinSplitProof(_tx),
             "WithdrawFunds: Invalid Funds proof"
         );
         uint256[] memory leaves = new uint256[](1);
@@ -91,8 +90,7 @@ contract Aegis is Commitments, Verifier {
         uint256 _id,
         IERC721 _nftContract,
         address _recipient,
-        OwnershipTransaction calldata _tx,
-        bool optimized
+        OwnershipTransaction calldata _tx
     ) external {
         uint256 uid = uint256(
             keccak256(abi.encodePacked(_id, address(_nftContract)))
@@ -114,7 +112,7 @@ contract Aegis is Commitments, Verifier {
         );
 
         require(
-            Verifier.verifyOwnershipProof(_tx, optimized),
+            Verifier.verifyOwnershipProof(_tx),
             "WithdrawNFT: Invalid NFT proof"
         );
 
@@ -125,8 +123,7 @@ contract Aegis is Commitments, Verifier {
 
     function swap(
         JoinSplitTransaction calldata _js,
-        OwnershipTransaction calldata _nft,
-        bool optimized
+        OwnershipTransaction calldata _nft
     ) external {
         require(_js.message == _nft.commitment, "Swap: Invalid NFT transfer");
         require(
@@ -157,11 +154,11 @@ contract Aegis is Commitments, Verifier {
         );
 
         require(
-            Verifier.verifyJoinSplitProof(_js, optimized),
+            Verifier.verifyJoinSplitProof(_js),
             "Swap: Invalid Funds proof"
         );
         require(
-            Verifier.verifyOwnershipProof(_nft, optimized),
+            Verifier.verifyOwnershipProof(_nft),
             "Swap: Invalid NFT proof"
         );
         uint256[] memory leaves = new uint256[](3);

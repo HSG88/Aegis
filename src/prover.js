@@ -99,11 +99,7 @@ async function generateProof(
     valuesOut,
     commitmentsOut,
   };
-  if (isOptimized) {
-    const arr = [message, merkleTree.root, nullifiers, commitmentsOut].flat(1);
-    // eslint-disable-next-line dot-notation
-    circuitInputs['hash'] = utils.sha256(arr) % utils.SNARK_SCALAR_FIELD;
-  }
+
   await genWnts(circuitInputs, ws, 'witness.wtns');
   const fullProof = await snarkjs.groth16.prove(pk, 'witness.wtns', null);
   const solidityProof = formatProof(fullProof.proof);

@@ -8,9 +8,9 @@ import {Snark} from "./Snark.sol";
 
 contract Verifier {
     // Verifying keys for Joinsplit and Ownership
-    VerifyingKey[4] internal vKeys; //normal JS, normal Own, optimized JS, optimized Own
+    VerifyingKey[2] internal vKeys; // JoinSplit and Ownership
 
-    function initializeVerifier(VerifyingKey[4] calldata _vKeys) internal {
+    function initializeVerifier(VerifyingKey[2] calldata _vKeys) internal {
         for (uint256 i = 0; i < _vKeys.length; i++) {
             // Alpha
             vKeys[i].alpha1.x = _vKeys[i].alpha1.x;

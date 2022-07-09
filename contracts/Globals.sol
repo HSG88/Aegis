@@ -33,6 +33,7 @@ struct SnarkProof {
 
 struct OwnershipTransaction {
     SnarkProof proof;
+    uint treeNumber;
     uint256 message;
     uint256 merkleRoot;
     uint256 commitment;
@@ -41,6 +42,7 @@ struct OwnershipTransaction {
 
 struct JoinSplitTransaction {
     SnarkProof proof;
+    uint256 treeNumber;
     uint256 message;
     uint256 merkleRoot;
     uint256[2] commitments;

@@ -6,11 +6,6 @@ const SNARK_SCALAR_FIELD = BigInt(
   '21888242871839275222246405745257275088548364400416034343698204186575808495617',
 );
 
-function bigInt2Buffer(bigint, width = 32) {
-  const hex = bigint.toString(16);
-  return Buffer.from(hex.padStart(width * 2, '0'), 'hex');
-}
-
 function buffer2BigInt(buf) {
   if (buf.length === 0) {
     return 0n;

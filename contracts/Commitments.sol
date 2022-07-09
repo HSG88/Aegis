@@ -21,7 +21,7 @@ contract Commitments {
   uint256 internal constant TREE_DEPTH = 8;
 
   // Tree zero value
-  uint256 public constant ZERO_VALUE = uint256(keccak256("Railgun")) % SNARK_SCALAR_FIELD;
+  uint256 public constant ZERO_VALUE = uint256(keccak256("Aegis")) % SNARK_SCALAR_FIELD;
 
   // Next leaf index (number of inserted leaves in the current tree)
   uint256 internal nextLeafIndex;

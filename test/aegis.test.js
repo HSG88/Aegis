@@ -15,7 +15,7 @@ let aegisAlice;
 let aegisBob;
 let nftAlice;
 let snapshotId;
-const TREE_DEPTH = 10;
+const TREE_DEPTH = 8;
 
 async function getCommitmentFromTx(tx) {
   const rc = await tx.wait();
@@ -62,7 +62,6 @@ describe('Aegis', () => {
   });
 
   it('Alice should swap her NFT for payment from Bob', async () => {
-    const isOptimized = false;
     // Mint NFT for Alice
     const NFT_ID = 10n;
     const nftKeyDeposit = utils.getKeyPair();
@@ -114,7 +113,6 @@ describe('Aegis', () => {
       [bobNFTKey],
       merkleTree,
       false,
-      isOptimized,
     );
 
     // Bob generates a tx to send payment to Alice
@@ -126,10 +124,9 @@ describe('Aegis', () => {
       [alicePaymentKey, bobChangeKey],
       merkleTree,
       true,
-      isOptimized,
     );
     // A relayer forwards both transactions to Aegis
-    tx = await aegis.swap(jsParams, ownParams, isOptimized);
+    tx = await aegis.swap(jsParams, ownParams);
 
     const commitments = [...jsParams.commitments, ownParams.commitment];
     merkleTree.insertLeaves(commitments);
@@ -144,11 +141,10 @@ describe('Aegis', () => {
       [{ publicKey: BigInt(alice.address) }, dummyKey],
       merkleTree,
       true,
-      isOptimized,
     );
     // TX sent by a relayer
     const oldBalance = (await ethers.provider.getBalance(alice.address)).toBigInt();
-    await aegis.withdrawFunds(paymentAmount, alice.address, aliceJS, isOptimized);
+    await aegis.withdrawFunds(paymentAmount, alice.address, aliceJS);
     const newBalance = (await ethers.provider.getBalance(alice.address)).toBigInt();
     await expect(oldBalance + paymentAmount).to.equal(newBalance);
 
@@ -161,10 +157,9 @@ describe('Aegis', () => {
       [{ publicKey: BigInt(bob.address) }],
       merkleTree,
       false,
-      isOptimized,
     );
     // TX sent by a relayer
-    await aegis.withdrawNFT(NFT_ID, nft.address, bob.address, bobNFT, isOptimized);
+    await aegis.withdrawNFT(NFT_ID, nft.address, bob.address, bobNFT);
     const res = await nft.ownerOf(NFT_ID);
     expect(res).to.equal(bob.address);
   });

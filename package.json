@@ -4,10 +4,11 @@
   "description": "Aegis",
   "license": "MIT",
   "scripts": {
-    "build:circuits": "./scripts/buildCircuits.sh",
+    "build": "./scripts/buildCircuits.sh",
     "lint": "solhint 'contracts/**/*.sol' && eslint .",
     "clean": "hardhat clean",
-    "compile": "npm run lint && npm run clean && hardhat compile"
+    "compile": "npm run lint && npm run clean && hardhat compile",
+    "test": "npx hardhat test"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",

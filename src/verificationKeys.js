@@ -30,9 +30,7 @@ function formatVKey(vkey) {
 function getVerificationKeys() {
   const vkJS = formatVKey(JSON.parse(fs.readFileSync('./build/JoinSplit.json')));
   const vkOwn = formatVKey(JSON.parse(fs.readFileSync('./build/Ownership.json')));
-  const vkJSOptimized = formatVKey(JSON.parse(fs.readFileSync('./build/JoinSplitOptimized.json')));
-  const vkOwnOptimized = formatVKey(JSON.parse(fs.readFileSync('./build/OwnershipOptimized.json')));
-  return [vkJS, vkOwn, vkJSOptimized, vkOwnOptimized];
+  return [vkJS, vkOwn];
 }
 module.exports = {
   getVerificationKeys,

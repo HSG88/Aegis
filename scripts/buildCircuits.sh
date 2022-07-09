@@ -8,7 +8,7 @@ mkdir -p ../build
 
 cd ../build
 
-ptau=powersOfTau28_hez_final_18.ptau
+ptau=powersOfTau28_hez_final_20.ptau
 
 if [ -f $ptau ]; then
     echo "$ptau already exists. Skipping."

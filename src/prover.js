@@ -1,21 +1,15 @@
 /* eslint-disable no-plusplus */
 const snarkjs = require('snarkjs');
-const fs = require('fs');
-const builder = require('./witnessCalculator');
 const utils = require('./utils');
 
 const pKeys = {
   js: './build/JoinSplit.zkey',
-  jsOptimized: './build/JoinSplitOptimized.zkey',
   own: './build/Ownership.zkey',
-  ownOptimized: './build/OwnershipOptimized.zkey',
 };
 
 const wasm = {
   js: './build/JoinSplit.wasm',
-  jsOptimized: './build/JoinSplitOptimized.wasm',
   own: './build/Ownership.wasm',
-  ownOptimized: './build/OwnershipOptimized.wasm',
 };
 
 function formatProof(proof) {
@@ -25,31 +19,10 @@ function formatProof(proof) {
     c: proof.pi_c.slice(0, 2),
   };
 }
-async function genWnts(input, wasmFilePath, witnessFileName) {
-  const buffer = fs.readFileSync(wasmFilePath);
 
-  return new Promise((resolve, reject) => {
-    builder(buffer)
-      .then(async (witnessCalculator) => {
-        const buff = await witnessCalculator.calculateWTNSBin(input, 0);
-        fs.writeFileSync(witnessFileName, buff);
-        resolve(witnessFileName);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
-
-function chooseArtifacts(isJoinSplit, isOptimized) {
+function chooseArtifacts(isJoinSplit) {
   if (isJoinSplit) {
-    if (isOptimized) {
-      return { ws: wasm.jsOptimized, pk: pKeys.jsOptimized };
-    }
     return { ws: wasm.js, pk: pKeys.js };
-  }
-  if (isOptimized) {
-    return { ws: wasm.ownOptimized, pk: pKeys.ownOptimized };
   }
   return { ws: wasm.own, pk: pKeys.own };
 }
@@ -62,7 +35,6 @@ async function generateProof(
   keysOut,
   merkleTree,
   isJoinSplit,
-  isOptimized,
 ) {
   const commitmentsOut = [];
   const nullifiers = [];
@@ -85,7 +57,7 @@ async function generateProof(
   }
   pathElements = pathElements.flat(1);
 
-  const { ws, pk } = chooseArtifacts(isJoinSplit, isOptimized);
+  const { ws, pk } = chooseArtifacts(isJoinSplit);
 
   const circuitInputs = {
     message,
@@ -100,12 +72,12 @@ async function generateProof(
     commitmentsOut,
   };
 
-  await genWnts(circuitInputs, ws, 'witness.wtns');
-  const fullProof = await snarkjs.groth16.prove(pk, 'witness.wtns', null);
+  const fullProof = await snarkjs.groth16.fullProve(circuitInputs, ws, pk);
   const solidityProof = formatProof(fullProof.proof);
   if (isJoinSplit) {
     return {
       proof: solidityProof,
+      treeNumber: 0,
       message,
       merkleRoot: merkleTree.root,
       nullifiers,
@@ -114,6 +86,7 @@ async function generateProof(
   }
   return {
     proof: solidityProof,
+    treeNumber: 0,
     message,
     merkleRoot: merkleTree.root,
     nullifier: nullifiers[0],

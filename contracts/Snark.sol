@@ -13,11 +13,10 @@ library Snark {
     function negate(G1Point memory p) internal pure returns (G1Point memory) {
         if (p.x == 0 && p.y == 0) return G1Point(0, 0);
 
-        // check for valid points y^2 = x^3 +3 % PRIME_Q
-        uint256 rh = mulmod(p.x, p.x, PRIME_Q); //x^2
-        rh = mulmod(rh, p.x, PRIME_Q); //x^3
-        rh = addmod(rh, 3, PRIME_Q); //x^3 + 3
-        uint256 lh = mulmod(p.y, p.y, PRIME_Q); //y^2
+        uint256 rh = mulmod(p.x, p.x, PRIME_Q);
+        rh = mulmod(rh, p.x, PRIME_Q);
+        rh = addmod(rh, 3, PRIME_Q);
+        uint256 lh = mulmod(p.y, p.y, PRIME_Q);
         require(lh == rh, "Snark: ");
 
         return G1Point(p.x, PRIME_Q - (p.y % PRIME_Q));
@@ -28,18 +27,15 @@ library Snark {
         view
         returns (G1Point memory)
     {
-        // Format inputs
         uint256[4] memory input;
         input[0] = p1.x;
         input[1] = p1.y;
         input[2] = p2.x;
         input[3] = p2.y;
 
-        // Setup output variables
         bool success;
         G1Point memory result;
 
-        // Add points
         // solhint-disable-next-line no-inline-assembly
         assembly {
             success := staticcall(
@@ -52,9 +48,7 @@ library Snark {
             )
         }
 
-        // Check if operation succeeded
         require(success, "Pairing: Add Failed");
-
         return result;
     }
 
@@ -73,8 +67,6 @@ library Snark {
         assembly {
             success := staticcall(sub(gas(), 2000), 7, input, 0x60, r, 0x40)
         }
-
-        // Check multiplication succeeded
         require(success, "Pairing: Scalar Multiplication Failed");
     }
 
@@ -130,9 +122,7 @@ library Snark {
             )
         }
 
-        // Check if operation succeeded
         require(success, "Pairing: Pairing Verification Failed");
-
         return out[0] != 0;
     }
 
@@ -142,10 +132,7 @@ library Snark {
         uint256[] memory _input
     ) internal view returns (bool) {
         require(_input.length + 1 == _vk.ic.length, "verifier-bad-input");
-        // Compute the linear combination vkX
         G1Point memory vkX = G1Point(0, 0);
-
-        // Compute vkX
         for (uint256 i = 0; i < _input.length; i++) {
             require(
                 _input[i] < SNARK_SCALAR_FIELD,
@@ -154,8 +141,6 @@ library Snark {
             vkX = add(vkX, scalarMul(_vk.ic[i + 1], _input[i]));
         }
         vkX = add(vkX, _vk.ic[0]);
-
-        // Verify pairing and return
         return
             pairing(
                 negate(_proof.a),

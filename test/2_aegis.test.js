@@ -15,7 +15,7 @@ let aegisAlice;
 let aegisBob;
 let nftAlice;
 let snapshotId;
-const TREE_DEPTH = 8;
+const TREE_DEPTH = 16;
 
 async function getCommitmentFromTx(tx) {
   const rc = await tx.wait();
@@ -34,7 +34,6 @@ describe('Aegis', () => {
   });
   before(async () => {
     const vkeys = getVerificationKeys();
-
     [, alice, bob] = await ethers.getSigners();
     // Deploy test token
     const NFT = await ethers.getContractFactory('NFT');
@@ -55,7 +54,7 @@ describe('Aegis', () => {
     });
 
     aegis = await Aegis.deploy();
-    await aegis.initializeAegis(vkeys);
+    await aegis.initializeAegis(TREE_DEPTH, vkeys);
 
     aegisAlice = aegis.connect(alice);
     aegisBob = aegis.connect(bob);

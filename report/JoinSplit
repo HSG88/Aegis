@@ -1,0 +1,62 @@
+Merkle Tree Depth = 8
+Constraints: 5748
+Witness: 26
+Statement: 6
+Setup: 20334
+Contribute: 2132
+#########################################
+Merkle Tree Depth = 9
+Constraints: 6232
+Witness: 28
+Statement: 6
+Setup: 21473
+Contribute: 2152
+#########################################
+Merkle Tree Depth = 10
+Constraints: 6716
+Witness: 30
+Statement: 6
+Setup: 22603
+Contribute: 2222
+#########################################
+Merkle Tree Depth = 11
+Constraints: 7200
+Witness: 32
+Statement: 6
+Setup: 23799
+Contribute: 2214
+#########################################
+Merkle Tree Depth = 12
+Constraints: 7684
+Witness: 34
+Statement: 6
+Setup: 25137
+Contribute: 2176
+#########################################
+Merkle Tree Depth = 13
+Constraints: 8168
+Witness: 36
+Statement: 6
+Setup: 26224
+Contribute: 2267
+#########################################
+Merkle Tree Depth = 14
+Constraints: 8652
+Witness: 38
+Statement: 6
+Setup: 27343
+Contribute: 2612
+#########################################
+Merkle Tree Depth = 15
+Constraints: 9136
+Witness: 40
+Statement: 6
+Setup: 28457
+Contribute: 2730
+#########################################
+Merkle Tree Depth = 16
+Constraints: 9620
+Witness: 42
+Statement: 6
+Setup: 29597
+Contribute: 2662

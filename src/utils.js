@@ -36,9 +36,24 @@ function keccak256(preimage) {
     % SNARK_SCALAR_FIELD
   );
 }
-
+function stringifyBigInts(o) {
+  if ((typeof (o) === 'bigint') || o.eq !== undefined) {
+    return o.toString(10);
+  } if (Array.isArray(o)) {
+    return o.map(stringifyBigInts);
+  } if (typeof o === 'object') {
+    const res = {};
+    const keys = Object.keys(o);
+    keys.forEach((k) => {
+      res[k] = stringifyBigInts(o[k]);
+    });
+    return res;
+  }
+  return o;
+}
 module.exports = {
   SNARK_SCALAR_FIELD,
+  stringifyBigInts,
   poseidon,
   getKeyPair,
   getCommitment,

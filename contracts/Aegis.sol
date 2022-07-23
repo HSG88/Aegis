@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 pragma abicoder v2;
 
-// OpenZeppelin v4
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import {VerifyingKey, SnarkProof, OwnershipTransaction, JoinSplitTransaction, SNARK_SCALAR_FIELD} from "./Globals.sol";
@@ -14,8 +13,8 @@ contract Aegis is Commitments, Verifier {
     event Nullifier(uint256 indexed nullifier);
     event Commitment(uint256 indexed commitment);
 
-    function initializeAegis(VerifyingKey[2] calldata _vk) external {
-        Commitments.initializeCommitments();
+    function initializeAegis(uint256 _treeDepth, VerifyingKey[2] calldata _vk) external {
+        Commitments.initializeCommitments(_treeDepth);
         Verifier.initializeVerifier(_vk);
     }
 

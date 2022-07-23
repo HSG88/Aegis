@@ -7,8 +7,7 @@ import {SnarkProof, G1Point, VerifyingKey, OwnershipTransaction, JoinSplitTransa
 import {Snark} from "./Snark.sol";
 
 contract Verifier {
-    // Verifying keys for Joinsplit and Ownership
-    VerifyingKey[2] internal vKeys; // JoinSplit and Ownership
+    VerifyingKey[2] internal vKeys;
 
     function initializeVerifier(VerifyingKey[2] calldata _vKeys) internal {
         for (uint256 i = 0; i < _vKeys.length; i++) {

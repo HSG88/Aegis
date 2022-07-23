@@ -40,21 +40,3 @@ mv ./Ownership_js/Ownership.wasm ./
 
 rm -r ./JoinSplit_js
 rm -r ./Ownership_js
-
-snarkjs=../node_modules/.bin/snarkjs
-
-echo "Running trusted setup"
-$snarkjs groth16 setup JoinSplit.r1cs ./$ptau tmp_0000.zkey
-$snarkjs zkey contribute tmp_0000.zkey tmp_0001.zkey --name="First contribution" -v -e="Random entropy"
-$snarkjs zkey beacon tmp_0001.zkey JoinSplit.zkey 0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f 10 -n="Final Beacon phase2"
-$snarkjs zkey export verificationkey JoinSplit.zkey JoinSplit.json
-rm tmp*
-
-
-$snarkjs groth16 setup Ownership.r1cs ./$ptau tmp_0000.zkey
-$snarkjs zkey contribute tmp_0000.zkey tmp_0001.zkey --name="First contribution" -v -e="Random entropy"
-$snarkjs zkey beacon tmp_0001.zkey Ownership.zkey 0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f 10 -n="Final Beacon phase2"
-$snarkjs zkey export verificationkey Ownership.zkey Ownership.json
-rm tmp*
-
-echo "Trusted setup completed successfully"

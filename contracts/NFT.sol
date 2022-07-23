@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 pragma abicoder v2;
 
-// OpenZeppelin v4
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract NFT is ERC721 {

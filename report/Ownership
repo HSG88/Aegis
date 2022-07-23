@@ -1,0 +1,62 @@
+Merkle Tree Depth = 8
+Constraints: 2874
+Witness: 13
+Statement: 4
+Setup: 13330
+Contribute: 1720
+#########################################
+Merkle Tree Depth = 9
+Constraints: 3116
+Witness: 14
+Statement: 4
+Setup: 13859ms
+Contribute: 1712ms
+#########################################
+Merkle Tree Depth = 10
+Constraints: 3358
+Witness: 15
+Statement: 4
+Setup: 14441ms
+Contribute: 1705ms
+#########################################
+Merkle Tree Depth = 11
+Constraints: 3600
+Witness: 16
+Statement: 4
+Setup: 15062ms
+Contribute: 1730ms
+#########################################
+Merkle Tree Depth = 12
+Constraints: 3842
+Witness: 17
+Statement: 4
+Setup: 15635ms
+Contribute: 1774ms
+#########################################
+Merkle Tree Depth = 13
+Constraints: 4084
+Witness: 18
+Statement: 4
+Setup: 16270ms
+Contribute: 1779ms
+#########################################
+Merkle Tree Depth = 14
+Constraints: 4326
+Witness: 19
+Statement: 4
+Setup: 16802ms
+Contribute: 1983ms
+#########################################
+Merkle Tree Depth = 15
+Constraints: 4568
+Witness: 20
+Statement: 4
+Setup: 17405ms
+Contribute: 1961ms
+#########################################
+Merkle Tree Depth = 16
+Constraints: 4810
+Witness: 21
+Statement: 4
+Setup: 18017ms
+Contribute: 2092ms

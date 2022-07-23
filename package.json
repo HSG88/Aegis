@@ -8,7 +8,9 @@
     "lint": "solhint 'contracts/**/*.sol' && eslint .",
     "clean": "hardhat clean",
     "compile": "npm run lint && npm run clean && hardhat compile",
-    "test": "npx hardhat test"
+    "setup": "npx mocha test -s 0 -t 100000 --exit -g setup",
+    "test": "npx hardhat test ./test/2_aegis.test.js",
+    "all": "yarn build && yarn setup && yarn test"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",

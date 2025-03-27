@@ -1,5 +1,6 @@
 # Aegis
 This is the proof of concept presented in our paper "Aegis: Privacy Preserving Market for Non-Fungible Tokens".
+
 ## Getting started 
 - Install [Node.js](https://nodejs.org/en/)
 - Install [Circom 2](https://docs.circom.io/getting-started/installation/)
@@ -17,3 +18,7 @@ This is the proof of concept presented in our paper "Aegis: Privacy Preserving M
   - Make sure you have built the artifacts by running `npm run builds`
   - `cd /build`
   - Run `npx snarkjs r1cs info #x` where `#x` is the `*.r1cs` file (e.g. `JoinSplit.r1cs`)
+
+
+## Remarks
+The authors don't hold any liability for any loss that might result for using this software, and it serves only as a proof of concept for the protocol described in our paper.
